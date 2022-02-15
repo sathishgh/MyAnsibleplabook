@@ -1,0 +1,28 @@
+---
+- name: Update Repo
+
+  yum:
+    name: "*"
+    state: latest
+- name: Install required Java
+  yum:
+    name: "{{ req_java }}"
+    state: present
+- name: Setting Default java
+  alternatives:
+    name: java
+    link: /usr/bin/java
+    path: /usr/lib/jvm/{{ set_java }}/bin/java
+- name: Downloading tomcat
+  get_url:
+    url: "{{ tomcat_url }}"
+    dest: /usr/local
+- name: Extracting tomcat
+  unarchive:
+    src: "/usr/local/apache-tomcat-{{ req_tomcat_ver }}.tar.gz"
+    dest: /usr/local
+    remote_src: yes
+- name: Renaming file
+  command: mv /usr/local/apache-tomcat-{{ req_tomcat_ver }} /usr/local/tomcat
+- name: Starting the tomcat server
+  shell: nohup /usr/local/tomcat/bin/startup.sh &

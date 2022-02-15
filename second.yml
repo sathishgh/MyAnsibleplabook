@@ -1,0 +1,15 @@
+---
+- hosts: 172.31.86.124
+  become: yes
+  tasks:
+   - name: Update Repo
+     yum: 
+       name: "*"
+       state: latest
+  roles:
+    - role: geerlingguy.java
+      when: "ansible_os_family == 'RedHat'"
+      java_packages:
+        - java-1.8.0-openjdk
+    - role: tomcat4linux
+

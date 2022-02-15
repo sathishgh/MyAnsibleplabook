@@ -1,0 +1,16 @@
+---
+# tasks file for tomcatwithwar
+- name: update ubuntu packages and install java
+  apt:
+    name: openjdk-8-jdk
+    update_cache: yes
+    state: present
+- name: install tomcat8
+  apt: 
+    name: tomcat8
+    state: present
+- name: Download game of life
+  copy:
+    src: /tempwar/SampleWebApp.war    #source also in Nodeserver,need to practice from different sources(github,from another server)
+    dest: /var/lib/tomcat8/webapps/
+    #remote_src: yes

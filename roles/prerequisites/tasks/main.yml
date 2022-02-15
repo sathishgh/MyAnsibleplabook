@@ -1,0 +1,10 @@
+---
+# tasks file for prerequisites
+- name: Install git
+  apt:
+    name: git
+    state: present
+    update_catche: yes
+
+
+
